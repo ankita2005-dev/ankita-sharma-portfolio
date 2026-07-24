@@ -139,8 +139,37 @@
     border-color: var(--color-border);
   }
 
-  body {
+  html, body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
   }
+
+  .font-serif { font-family: var(--font-serif); }
+  .font-sans { font-family: var(--font-sans); }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-muted-foreground);
+    font-weight: 500;
+  }
+
+  .hairline { height: 1px; background-color: var(--color-border); width: 100%; }
+
+  @keyframes drift {
+    0%, 100% { transform: translate3d(0,0,0) rotate(-1deg); }
+    50% { transform: translate3d(0,-8px,0) rotate(1deg); }
+  }
+  .animate-drift { animation: drift 8s ease-in-out infinite; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up { animation: fadeUp 0.8s ease-out both; }
 }
