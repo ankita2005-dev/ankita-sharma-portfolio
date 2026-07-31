@@ -1,5 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import resumeAsset from "@/assets/resume.pdf.asset.json";
+import certCode from "@/assets/cert-code.asset.json";
+import certHdfc from "@/assets/cert-hdfc.asset.json";
+import certOutskill from "@/assets/cert-outskill.asset.json";
+
+function scrollToId(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    e.preventDefault();
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 
 export const Route = createFileRoute("/")({
   component: Index,
