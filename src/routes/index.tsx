@@ -1,5 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import resumeAsset from "@/assets/resume.pdf.asset.json";
+import certCode from "@/assets/cert-code.asset.json";
+import certHdfc from "@/assets/cert-hdfc.asset.json";
+import certOutskill from "@/assets/cert-outskill.asset.json";
+
+function scrollToId(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    e.preventDefault();
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -82,6 +94,7 @@ function Nav() {
         </nav>
         <a
           href="#contact"
+          onClick={(e) => scrollToId(e, "contact")}
           className="hidden md:inline-flex items-center rounded-full border border-foreground/20 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
         >
           Get in touch
@@ -121,8 +134,10 @@ function Hero() {
               View Projects
             </a>
             <a
-              href="/Ankita-Sharma-Resume.pdf"
-              download
+              href={resumeAsset.url}
+              download="Ankita-Sharma-Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center rounded-full border border-foreground/25 px-5 py-2.5 text-sm font-medium hover:bg-foreground hover:text-background transition-colors"
             >
               Download Resume
@@ -311,6 +326,7 @@ type Project = {
   stack: string[];
   variant: "hero" | "sunset" | "lab" | "ams";
   domain: string;
+  live: string;
 };
 const PROJECTS: Project[] = [
   {
@@ -321,7 +337,8 @@ const PROJECTS: Project[] = [
       "A dynamic, animated marketing site with a responsive layout and rich micro-interactions built from scratch.",
     stack: ["HTML5", "CSS3", "JavaScript", "GSAP"],
     variant: "hero",
-    domain: "elementra-ai.dev",
+    domain: "elementra.netlify.app",
+    live: "https://elementra.netlify.app/",
   },
   {
     title: "Sunset Glow",
@@ -331,7 +348,8 @@ const PROJECTS: Project[] = [
       "A warm, editorial landing page translated pixel-for-pixel from Figma into fully responsive frontend code.",
     stack: ["HTML5", "CSS3", "Responsive", "Figma"],
     variant: "sunset",
-    domain: "sunset-glow.app",
+    domain: "my-figma-preview.netlify.app",
+    live: "https://my-figma-preview.netlify.app/",
   },
   {
     title: "Frontend Learning Lab",
@@ -341,17 +359,19 @@ const PROJECTS: Project[] = [
       "A growing set of small apps — Calculator, Weather API, Dark Mode toggle — focused on DOM manipulation and interactive UI.",
     stack: ["JavaScript", "DOM", "REST API"],
     variant: "lab",
-    domain: "learning-lab.dev",
+    domain: "frontendlearninglab.netlify.app",
+    live: "https://frontendlearninglab.netlify.app/",
   },
   {
-    title: "Attendance Management System",
-    kind: "Desktop application",
-    year: "2025",
+    title: "Bloom Cooking",
+    kind: "Live client sales page",
+    year: "2026",
     description:
-      "A Java Swing desktop application with a MySQL backend for tracking student attendance, records and reports.",
-    stack: ["Java Swing", "JDBC", "MySQL"],
+      "Developed a responsive Funnelish sales page for a live client project with a clean UI and conversion-focused user experience.",
+    stack: ["HTML5", "CSS3", "Funnelish", "Responsive"],
     variant: "ams",
-    domain: "ams.local",
+    domain: "pages.bloomcooking.com",
+    live: "https://pages.bloomcooking.com/gfbg-short-sl?preview=4170704#next-step",
   },
 ];
 
@@ -397,6 +417,14 @@ function ProjectCard({ p }: { p: Project }) {
           </span>
         ))}
       </div>
+      <a
+        href={p.live}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-6 inline-flex items-center rounded-full border border-foreground/25 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
+      >
+        Live Demo
+      </a>
     </article>
   );
 }
@@ -454,19 +482,28 @@ const CERTS = [
     title: "Internship Completion Certificate",
     issuer: "The Code Technologies",
     note: "Frontend Developer Intern",
+    image: certCode.url,
   },
   {
     title: "Junior Software Developer",
     issuer: "HDFC Bank Parivartan",
     note: "Software development fundamentals",
+    image: certHdfc.url,
   },
   {
     title: "Generative AI Mastermind",
     issuer: "Outskill",
     note: "Applied generative AI workflows",
+    image: certOutskill.url,
   },
 ];
 function Certifications() {
+  const [open, setOpen] = useState<null | (typeof CERTS)[number]>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   return (
     <Section
       id="certifications"
@@ -483,12 +520,61 @@ function Certifications() {
             key={c.title}
             className="rounded-2xl border border-border p-6 hover:border-foreground/30 transition-colors"
           >
+            <button
+              type="button"
+              onClick={() => setOpen(c)}
+              className="block w-full rounded-xl overflow-hidden border border-foreground/10 mb-5"
+            >
+              <img
+                src={c.image}
+                alt={`${c.title} — ${c.issuer}`}
+                loading="lazy"
+                className="w-full h-40 object-cover"
+              />
+            </button>
             <p className="eyebrow">{c.issuer}</p>
             <h3 className="font-serif text-xl mt-3 leading-snug">{c.title}</h3>
             <p className="mt-3 text-sm text-muted-foreground">{c.note}</p>
+            <button
+              type="button"
+              onClick={() => setOpen(c)}
+              className="mt-5 inline-flex items-center rounded-full border border-foreground/25 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
+            >
+              View Certificate
+            </button>
           </div>
         ))}
       </div>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/60 p-6"
+          onClick={() => setOpen(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="max-w-4xl w-full rounded-2xl bg-background p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 mb-3">
+              <p className="eyebrow">{open.issuer}</p>
+              <button
+                type="button"
+                onClick={() => setOpen(null)}
+                className="rounded-full border border-foreground/25 px-3 py-1 text-sm hover:bg-foreground hover:text-background transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            <img
+              src={open.image}
+              alt={`${open.title} — ${open.issuer}`}
+              className="w-full max-h-[75vh] object-contain rounded-xl"
+            />
+          </div>
+        </div>
+      )}
     </Section>
   );
 }
@@ -519,11 +605,20 @@ function Contact() {
         <ul className="md:col-span-6 divide-y divide-border border-y border-border">
           <ContactRow
             label="Email"
-            value="ankita.sharma.frontend@gmail.com"
-            href="mailto:ankita.sharma.frontend@gmail.com"
+            value="ankitasdev187@gmail.com"
+            href="mailto:ankitasdev187@gmail.com"
           />
-          <ContactRow label="LinkedIn" value="linkedin.com/in/ankita-sharma" href="https://linkedin.com/in/ankita-sharma" />
-          <ContactRow label="GitHub" value="github.com/ankita-sharma" href="https://github.com/ankita-sharma" />
+          <ContactRow label="Phone" value="+91 9646552029" href="tel:+919646552029" />
+          <ContactRow
+            label="LinkedIn"
+            value="linkedin.com/in/ankita-sharma-a107762bb"
+            href="https://www.linkedin.com/in/ankita-sharma-a107762bb"
+          />
+          <ContactRow
+            label="GitHub"
+            value="github.com/ankita2005-dev"
+            href="https://github.com/ankita2005-dev"
+          />
           <ContactRow label="Based in" value="Rupnagar, Punjab, India" />
         </ul>
       </div>
