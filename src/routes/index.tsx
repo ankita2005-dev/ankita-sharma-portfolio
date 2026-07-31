@@ -326,6 +326,7 @@ type Project = {
   stack: string[];
   variant: "hero" | "sunset" | "lab" | "ams";
   domain: string;
+  live: string;
 };
 const PROJECTS: Project[] = [
   {
@@ -336,7 +337,8 @@ const PROJECTS: Project[] = [
       "A dynamic, animated marketing site with a responsive layout and rich micro-interactions built from scratch.",
     stack: ["HTML5", "CSS3", "JavaScript", "GSAP"],
     variant: "hero",
-    domain: "elementra-ai.dev",
+    domain: "elementra.netlify.app",
+    live: "https://elementra.netlify.app/",
   },
   {
     title: "Sunset Glow",
@@ -346,7 +348,8 @@ const PROJECTS: Project[] = [
       "A warm, editorial landing page translated pixel-for-pixel from Figma into fully responsive frontend code.",
     stack: ["HTML5", "CSS3", "Responsive", "Figma"],
     variant: "sunset",
-    domain: "sunset-glow.app",
+    domain: "my-figma-preview.netlify.app",
+    live: "https://my-figma-preview.netlify.app/",
   },
   {
     title: "Frontend Learning Lab",
@@ -356,17 +359,19 @@ const PROJECTS: Project[] = [
       "A growing set of small apps — Calculator, Weather API, Dark Mode toggle — focused on DOM manipulation and interactive UI.",
     stack: ["JavaScript", "DOM", "REST API"],
     variant: "lab",
-    domain: "learning-lab.dev",
+    domain: "frontendlearninglab.netlify.app",
+    live: "https://frontendlearninglab.netlify.app/",
   },
   {
-    title: "Attendance Management System",
-    kind: "Desktop application",
-    year: "2025",
+    title: "Bloom Cooking",
+    kind: "Live client sales page",
+    year: "2026",
     description:
-      "A Java Swing desktop application with a MySQL backend for tracking student attendance, records and reports.",
-    stack: ["Java Swing", "JDBC", "MySQL"],
+      "Developed a responsive Funnelish sales page for a live client project with a clean UI and conversion-focused user experience.",
+    stack: ["HTML5", "CSS3", "Funnelish", "Responsive"],
     variant: "ams",
-    domain: "ams.local",
+    domain: "pages.bloomcooking.com",
+    live: "https://pages.bloomcooking.com/gfbg-short-sl?preview=4170704#next-step",
   },
 ];
 
