@@ -94,6 +94,7 @@ function Nav() {
         </nav>
         <a
           href="#contact"
+          onClick={(e) => scrollToId(e, "contact")}
           className="hidden md:inline-flex items-center rounded-full border border-foreground/20 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
         >
           Get in touch
