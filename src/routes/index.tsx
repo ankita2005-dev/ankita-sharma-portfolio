@@ -547,11 +547,20 @@ function Contact() {
         <ul className="md:col-span-6 divide-y divide-border border-y border-border">
           <ContactRow
             label="Email"
-            value="ankita.sharma.frontend@gmail.com"
-            href="mailto:ankita.sharma.frontend@gmail.com"
+            value="ankitasdev187@gmail.com"
+            href="mailto:ankitasdev187@gmail.com"
           />
-          <ContactRow label="LinkedIn" value="linkedin.com/in/ankita-sharma" href="https://linkedin.com/in/ankita-sharma" />
-          <ContactRow label="GitHub" value="github.com/ankita-sharma" href="https://github.com/ankita-sharma" />
+          <ContactRow label="Phone" value="+91 9646552029" href="tel:+919646552029" />
+          <ContactRow
+            label="LinkedIn"
+            value="linkedin.com/in/ankita-sharma-a107762bb"
+            href="https://www.linkedin.com/in/ankita-sharma-a107762bb"
+          />
+          <ContactRow
+            label="GitHub"
+            value="github.com/ankita2005-dev"
+            href="https://github.com/ankita2005-dev"
+          />
           <ContactRow label="Based in" value="Rupnagar, Punjab, India" />
         </ul>
       </div>
