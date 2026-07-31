@@ -618,6 +618,10 @@ function Contact() {
             label="LinkedIn"
             value="linkedin.com/in/ankita-sharma-a107762bb"
             href="https://www.linkedin.com/in/ankita-sharma-a107762bb"
+            onClick={(e) => {
+              e.preventDefault();
+              window.open("https://www.linkedin.com/in/ankita-sharma-a107762bb", "_blank", "noopener,noreferrer");
+            }}
           />
           <ContactRow
             label="GitHub"
