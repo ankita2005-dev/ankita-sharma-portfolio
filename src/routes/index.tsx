@@ -477,7 +477,14 @@ function Skills() {
 }
 
 /* ---------- CERTIFICATIONS ---------- */
-const CERTS = [
+type Cert = {
+  title: string;
+  issuer: string;
+  note: string;
+  date?: string;
+  image: string;
+};
+const CERTS: Cert[] = [
   {
     title: "Internship Completion Certificate",
     issuer: "The Code Technologies",
@@ -498,7 +505,7 @@ const CERTS = [
   },
 ];
 function Certifications() {
-  const [open, setOpen] = useState<null | (typeof CERTS)[number]>(null);
+  const [open, setOpen] = useState<null | Cert>(null);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(null);
     window.addEventListener("keydown", onKey);
@@ -516,33 +523,28 @@ function Certifications() {
     >
       <div className="grid md:grid-cols-3 gap-6">
         {CERTS.map((c) => (
-          <div
+          <article
             key={c.title}
-            className="rounded-2xl border border-border p-6 hover:border-foreground/30 transition-colors"
+            className="group rounded-2xl border border-border bg-background/40 p-5 md:p-6 transition-colors hover:border-foreground/30"
           >
-            <button
-              type="button"
-              onClick={() => setOpen(c)}
-              className="block w-full rounded-xl overflow-hidden border border-foreground/10 mb-5"
-            >
-              <img
-                src={c.image}
-                alt={`${c.title} — ${c.issuer}`}
-                loading="lazy"
-                className="w-full h-40 object-cover"
-              />
-            </button>
             <p className="eyebrow">{c.issuer}</p>
-            <h3 className="font-serif text-xl mt-3 leading-snug">{c.title}</h3>
-            <p className="mt-3 text-sm text-muted-foreground">{c.note}</p>
+            <h3 className="font-serif text-xl md:text-2xl mt-3 leading-snug">
+              {c.title}
+            </h3>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              {c.note}
+            </p>
+            {c.date && (
+              <p className="mt-3 text-xs text-muted-foreground">{c.date}</p>
+            )}
             <button
               type="button"
               onClick={() => setOpen(c)}
-              className="mt-5 inline-flex items-center rounded-full border border-foreground/25 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
+              className="mt-6 inline-flex items-center rounded-full border border-foreground/25 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
             >
               View Certificate
             </button>
-          </div>
+          </article>
         ))}
       </div>
 
@@ -558,7 +560,10 @@ function Certifications() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between gap-4 mb-3">
-              <p className="eyebrow">{open.issuer}</p>
+              <div>
+                <p className="eyebrow">{open.issuer}</p>
+                <h3 className="font-serif text-lg mt-1">{open.title}</h3>
+              </div>
               <button
                 type="button"
                 onClick={() => setOpen(null)}
