@@ -134,8 +134,10 @@ function Hero() {
               View Projects
             </a>
             <a
-              href="/Ankita-Sharma-Resume.pdf"
-              download
+              href={resumeAsset.url}
+              download="Ankita-Sharma-Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center rounded-full border border-foreground/25 px-5 py-2.5 text-sm font-medium hover:bg-foreground hover:text-background transition-colors"
             >
               Download Resume
