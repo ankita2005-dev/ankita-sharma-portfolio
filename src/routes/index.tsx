@@ -482,19 +482,28 @@ const CERTS = [
     title: "Internship Completion Certificate",
     issuer: "The Code Technologies",
     note: "Frontend Developer Intern",
+    image: certCode.url,
   },
   {
     title: "Junior Software Developer",
     issuer: "HDFC Bank Parivartan",
     note: "Software development fundamentals",
+    image: certHdfc.url,
   },
   {
     title: "Generative AI Mastermind",
     issuer: "Outskill",
     note: "Applied generative AI workflows",
+    image: certOutskill.url,
   },
 ];
 function Certifications() {
+  const [open, setOpen] = useState<null | (typeof CERTS)[number]>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   return (
     <Section
       id="certifications"
@@ -511,12 +520,61 @@ function Certifications() {
             key={c.title}
             className="rounded-2xl border border-border p-6 hover:border-foreground/30 transition-colors"
           >
+            <button
+              type="button"
+              onClick={() => setOpen(c)}
+              className="block w-full rounded-xl overflow-hidden border border-foreground/10 mb-5"
+            >
+              <img
+                src={c.image}
+                alt={`${c.title} — ${c.issuer}`}
+                loading="lazy"
+                className="w-full h-40 object-cover"
+              />
+            </button>
             <p className="eyebrow">{c.issuer}</p>
             <h3 className="font-serif text-xl mt-3 leading-snug">{c.title}</h3>
             <p className="mt-3 text-sm text-muted-foreground">{c.note}</p>
+            <button
+              type="button"
+              onClick={() => setOpen(c)}
+              className="mt-5 inline-flex items-center rounded-full border border-foreground/25 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
+            >
+              View Certificate
+            </button>
           </div>
         ))}
       </div>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/60 p-6"
+          onClick={() => setOpen(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="max-w-4xl w-full rounded-2xl bg-background p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 mb-3">
+              <p className="eyebrow">{open.issuer}</p>
+              <button
+                type="button"
+                onClick={() => setOpen(null)}
+                className="rounded-full border border-foreground/25 px-3 py-1 text-sm hover:bg-foreground hover:text-background transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            <img
+              src={open.image}
+              alt={`${open.title} — ${open.issuer}`}
+              className="w-full max-h-[75vh] object-contain rounded-xl"
+            />
+          </div>
+        </div>
+      )}
     </Section>
   );
 }
