@@ -417,6 +417,14 @@ function ProjectCard({ p }: { p: Project }) {
           </span>
         ))}
       </div>
+      <a
+        href={p.live}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-6 inline-flex items-center rounded-full border border-foreground/25 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
+      >
+        Live Demo
+      </a>
     </article>
   );
 }
