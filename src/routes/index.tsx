@@ -618,6 +618,10 @@ function Contact() {
             label="LinkedIn"
             value="linkedin.com/in/ankita-sharma-a107762bb"
             href="https://www.linkedin.com/in/ankita-sharma-a107762bb"
+            onClick={(e) => {
+              e.preventDefault();
+              window.open("https://www.linkedin.com/in/ankita-sharma-a107762bb", "_blank", "noopener,noreferrer");
+            }}
           />
           <ContactRow
             label="GitHub"
@@ -630,7 +634,17 @@ function Contact() {
     </Section>
   );
 }
-function ContactRow({ label, value, href }: { label: string; value: string; href?: string }) {
+function ContactRow({
+  label,
+  value,
+  href,
+  onClick,
+}: {
+  label: string;
+  value: string;
+  href?: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}) {
   const inner = (
     <div className="flex items-center justify-between py-4 group">
       <span className="eyebrow">{label}</span>
@@ -642,7 +656,12 @@ function ContactRow({ label, value, href }: { label: string; value: string; href
   return (
     <li>
       {href ? (
-        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+        <a
+          href={href}
+          target={href.startsWith("http") ? "_blank" : undefined}
+          rel="noreferrer"
+          onClick={onClick}
+        >
           {inner}
         </a>
       ) : (
