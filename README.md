@@ -1,45 +1,54 @@
-# Frontend Portfolio Refine
+# Ankita Sharma – Frontend Developer Portfolio
 
-I am providing the URL of an existing portfolio that was originally built in Lovable. 
-Here It is https://elegant-showcase-shell.lovable.app/
+A modern, responsive portfolio website showcasing my frontend development journey, technical skills, internship experience, and real-world projects. The portfolio focuses on clean UI, responsive layouts, smooth interactions, and user-centered web experiences.
 
-Your first task is NOT to redesign or recreate it.
+## About
 
-Instead:
+This portfolio brings together the work I have completed throughout my learning and internship experience. It highlights projects built with modern frontend technologies, demonstrates responsive design principles, and reflects my approach to creating clean, interactive, and accessible web interfaces.
 
-1. Open and analyze the complete website.
+## Features
 
-2. Understand every section, layout, animation, typography, spacing, responsiveness, components, navigation, and styling.
+- Responsive design across desktop, tablet, and mobile
+- Clean and modern user interface
+- Interactive animations using GSAP
+- Internship experience
+- Project showcase
+- Technical skills overview
+- Certifications
+- Contact section
 
-3. Treat the current website as the base project that must be improved.
+## Tech Stack
 
-4. Preserve everything that already looks premium and professional.
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- GSAP
+- Responsive Web Design
+- Netlify
 
-5. Do not generate any code or make any changes yet.
+## Featured Projects
 
-After you finish analyzing the website, simply confirm that you completely understand its current structure and are ready to transform it into my personal Frontend Developer portfolio.
+- Elementra AI
+- Bloom Cooking
+- Sunset Glow
+- React To-Do List
 
-Wait for my next prompt before making any modifications.
+## Live Portfolio
 
-This project was built with [Lovable](https://lovable.dev).
+https://ankita-sharma-portfolio.netlify.app/
 
-**Live app**: https://ankita-sharma-portfolio.lovable.app
+## Repository Purpose
 
-## Build with Lovable
+This repository contains the complete source code for my personal portfolio website, developed to present my work, technical skills, and professional experience as a Frontend Developer.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/f9c3d4ee-53ae-447c-8733-ac4f43ac8a56).
+## Connect With Me
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+**LinkedIn**
+https://www.linkedin.com/in/ankita-sharma-a107762bb
 
-## Development
+**GitHub**
+https://github.com/ankita2005-dev
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+---
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+Thank you for visiting my portfolio.
