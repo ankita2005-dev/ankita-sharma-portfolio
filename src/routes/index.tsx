@@ -4,6 +4,7 @@ import resumeAsset from "@/assets/resume.pdf.asset.json";
 import certCode from "@/assets/cert-code.asset.json";
 import certHdfc from "@/assets/cert-hdfc.asset.json";
 import certOutskill from "@/assets/cert-outskill.asset.json";
+import luxeLaneImage from "@/assets/luxe-lane-fashion.jpg";
 
 function scrollToId(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
   const el = document.getElementById(id);
@@ -29,6 +30,8 @@ export const Route = createFileRoute("/")({
         content:
           "Portfolio of Ankita Sharma — Frontend Developer open to internships and entry-level roles in Mohali, Chandigarh and Remote.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
 });
@@ -167,10 +170,12 @@ function BrowserMock({
   className = "",
   title,
   variant,
+  imageSrc,
 }: {
   className?: string;
   title: string;
   variant: "hero" | "sunset" | "lab" | "ams";
+  imageSrc?: string;
 }) {
   const palettes: Record<string, { bg: string; a: string; b: string; c: string }> = {
     hero:   { bg: "from-[#1a1a1f] to-[#2b2b34]", a: "bg-white/80", b: "bg-white/30", c: "bg-white/15" },
@@ -191,15 +196,26 @@ function BrowserMock({
           {title}
         </span>
       </div>
-      <div className={`h-48 md:h-56 bg-gradient-to-br ${p.bg} relative`}>
-        <div className="absolute inset-0 p-5 flex flex-col justify-end gap-2">
-          <div className={`h-2.5 w-2/3 rounded-full ${p.a}`} />
-          <div className={`h-2 w-1/2 rounded-full ${p.b}`} />
-          <div className="flex gap-2 pt-2">
-            <div className={`h-6 w-16 rounded-full ${p.c}`} />
-            <div className={`h-6 w-10 rounded-full ${p.c}`} />
+      <div className={`h-48 md:h-56 ${imageSrc ? "" : `bg-gradient-to-br ${p.bg} relative`}`}>
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt="Editorial fashion preview for the LUXE LANE storefront"
+            loading="lazy"
+            width={1360}
+            height={912}
+            className="h-full w-full object-cover object-center"
+          />
+        ) : (
+          <div className="absolute inset-0 p-5 flex flex-col justify-end gap-2">
+            <div className={`h-2.5 w-2/3 rounded-full ${p.a}`} />
+            <div className={`h-2 w-1/2 rounded-full ${p.b}`} />
+            <div className="flex gap-2 pt-2">
+              <div className={`h-6 w-16 rounded-full ${p.c}`} />
+              <div className={`h-6 w-10 rounded-full ${p.c}`} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -321,12 +337,15 @@ function Experience() {
 type Project = {
   title: string;
   kind: string;
-  year: string;
+  year?: string;
   description: string;
   stack: string[];
   variant: "hero" | "sunset" | "lab" | "ams";
   domain: string;
   live: string;
+  imageSrc?: string;
+  status?: string;
+  passwordNote?: string;
 };
 const PROJECTS: Project[] = [
   {
@@ -373,6 +392,26 @@ const PROJECTS: Project[] = [
     domain: "pages.bloomcooking.com",
     live: "https://pages.bloomcooking.com/gfbg-short-sl?preview=4170704#next-step",
   },
+  {
+    title: "LUXE LANE – Shopify E-commerce Store",
+    kind: "Shopify Development | E-commerce",
+    description:
+      "Designed and set up a premium fashion e-commerce storefront using Shopify. The store features an editorial luxury-inspired design, product listings, product images, multiple collections, responsive layouts, navigation, and essential storefront pages.",
+    stack: [
+      "Shopify",
+      "12 sample products · 5 collections",
+      "Responsive desktop & mobile",
+      "About · Contact · FAQ",
+      "Shopping cart interface",
+      "Header & footer navigation",
+    ],
+    variant: "hero",
+    domain: "4qwtqd-j0.myshopify.com",
+    live: "https://4qwtqd-j0.myshopify.com/",
+    imageSrc: luxeLaneImage,
+    status: "Portfolio Demonstration Store",
+    passwordNote: "Password-protected demo | Password: eampau",
+  },
 ];
 
 function Projects() {
@@ -399,13 +438,19 @@ function ProjectCard({ p }: { p: Project }) {
   return (
     <article className="group rounded-2xl border border-border bg-background/40 p-5 md:p-6 transition-colors hover:border-foreground/30">
       <div className="rounded-xl overflow-hidden border border-foreground/10">
-        <BrowserMock title={p.domain} variant={p.variant} className="!shadow-none !border-0 rounded-none" />
+        <BrowserMock
+          title={p.domain}
+          variant={p.variant}
+          imageSrc={p.imageSrc}
+          className="!shadow-none !border-0 rounded-none"
+        />
       </div>
       <div className="mt-6 flex items-baseline justify-between gap-4">
         <h3 className="font-serif text-2xl md:text-3xl tracking-tight">{p.title}</h3>
-        <span className="text-xs text-muted-foreground shrink-0">{p.year}</span>
+        {p.year && <span className="text-xs text-muted-foreground shrink-0">{p.year}</span>}
       </div>
       <p className="mt-1 text-sm text-muted-foreground">{p.kind}</p>
+      {p.status && <p className="mt-1 text-xs text-muted-foreground">{p.status}</p>}
       <p className="mt-4 text-base text-foreground/85 leading-relaxed">{p.description}</p>
       <div className="mt-5 flex flex-wrap gap-2">
         {p.stack.map((s) => (
@@ -425,6 +470,9 @@ function ProjectCard({ p }: { p: Project }) {
       >
         Live Demo
       </a>
+      {p.passwordNote && (
+        <p className="mt-2 text-sm text-muted-foreground">{p.passwordNote}</p>
+      )}
     </article>
   );
 }
