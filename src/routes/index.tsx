@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
 import resumeAsset from "@/assets/resume.pdf.asset.json";
 import certCode from "@/assets/cert-code.asset.json";
 import certHdfc from "@/assets/cert-hdfc.asset.json";
@@ -44,6 +45,7 @@ const NAV = [
   { id: "certifications", label: "Certifications" },
   { id: "contact", label: "Contact" },
 ];
+const MOBILE_NAV = [{ id: "top", label: "Home" }, ...NAV];
 
 function Index() {
   return (
@@ -66,12 +68,49 @@ function Index() {
 /* ---------- NAV ---------- */
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !mobileNavRef.current?.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen]);
+
+  const handleMobileNavigation = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
+    scrollToId(event, id);
+    setMenuOpen(false);
+  };
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
@@ -102,6 +141,43 @@ function Nav() {
         >
           Get in touch
         </a>
+        <div ref={mobileNavRef} className="relative md:hidden">
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="inline-flex h-11 w-11 items-center justify-center text-foreground transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {menuOpen ? <X aria-hidden="true" size={23} /> : <Menu aria-hidden="true" size={23} />}
+          </button>
+          <nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+            aria-hidden={!menuOpen}
+            className={`absolute right-0 top-full mt-2 w-[min(20rem,calc(100vw-3rem))] origin-top-right overflow-hidden border border-border bg-background/95 shadow-lg backdrop-blur-md transition-[opacity,transform,max-height] duration-300 ease-out motion-reduce:transition-none ${
+              menuOpen
+                ? "max-h-[calc(100dvh-5rem)] translate-y-0 opacity-100"
+                : "pointer-events-none max-h-0 -translate-y-2 opacity-0"
+            }`}
+          >
+            <ul className="max-h-[calc(100dvh-5rem)] overflow-y-auto py-2">
+              {MOBILE_NAV.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    tabIndex={menuOpen ? 0 : -1}
+                    onClick={(event) => handleMobileNavigation(event, item.id)}
+                    className="flex min-h-12 items-center px-5 text-sm text-foreground/85 transition-colors hover:bg-foreground/5 hover:text-foreground focus-visible:outline-none focus-visible:bg-foreground/5"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );
