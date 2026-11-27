@@ -427,6 +427,7 @@ type Project = {
   variant: "hero" | "sunset" | "lab" | "ams";
   domain: string;
   live: string;
+  buttonLabel?: string;
   imageSrc?: string;
   status?: string;
   passwordNote?: string;
@@ -496,6 +497,17 @@ const PROJECTS: Project[] = [
     status: "Portfolio Demonstration Store",
     passwordNote: "Password-protected demo | Password: eampau",
   },
+  {
+    title: "TaskFlow — SaaS Project Management Dashboard",
+    kind: "UI/UX Design",
+    description:
+      "A SaaS project management dashboard UI/UX design concept focused on project tracking, task management, progress monitoring, upcoming deadlines, and team activity.",
+    stack: [],
+    variant: "lab",
+    domain: "dwarf-future-82075155.figma.site",
+    live: "https://dwarf-future-82075155.figma.site/",
+    buttonLabel: "View Live Project",
+  },
 ];
 
 function Projects() {
@@ -552,7 +564,7 @@ function ProjectCard({ p }: { p: Project }) {
         rel="noreferrer"
         className="mt-6 inline-flex items-center rounded-full border border-foreground/25 px-4 py-1.5 text-sm hover:bg-foreground hover:text-background transition-colors"
       >
-        Live Demo
+        {p.buttonLabel ?? "Live Demo"}
       </a>
       {p.passwordNote && (
         <p className="mt-2 text-sm text-muted-foreground">{p.passwordNote}</p>
